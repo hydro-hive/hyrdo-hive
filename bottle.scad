@@ -1,40 +1,47 @@
 
-cm = 1 ; 
 
-
-height    = 9 * cm ;
-size      = 8 * cm ; 
-thickness = 1 * cm ; 
-
-extruder_height = 3 * cm ; 
-
-
-// upper body 
-difference(){
-    linear_extrude(
-            height = height, 
-            center = false, 
-            convexity = 10
-            ){
-        square( size , center=true);
-    };
-    translate([0,0,-height]){
-    linear_extrude(
-            height = height * 3, 
-            center = false, 
-            convexity = 10
-            ){
-        square( size - thickness , center=true);
-    }
-    }
+module bottle_two(
+        height     
+        , size            
+        , thickness 
+        , nossle_height
+        , nossle_size
+        , filter_size
+        , filter_height
+        ){
+    first = nossle_height / 2;
+    second = nossle_height / 2; 
+    rotate_extrude()
+    rotate([90, 0, 0])
+    polygon(points = [
+    [size, 0]
+    , [size, height]
+    , [filter_size, height + first ]
+    , [filter_size, height + first + filter_height]
+    , [nossle_size, height + first + second + filter_height]
+    , [nossle_size + thickness , height + first + second + filter_height]
+    , [filter_size + thickness , height + first + filter_height]
+    , [filter_size + thickness , height + first ]
+    , [size + thickness, height]
+    , [size + thickness, 0]
+    ]
+    );
 }
 
+cm = 1 ; 
+mm = .1;
 
-//linear_extrude(
-//height = extruder_height, 
-//center = false, 
-//convexity = 10, 
-//scale = 0.3){
-    //square( size , center=true);
-//}
+
+bottle_two(
+height        = 5 * cm ,
+size          = 8 * cm ,
+thickness     = 1 * cm ,
+filter_size   = 3 * cm ,
+filter_height = 1 * cm ,
+nossle_size   = 5 * mm ,
+nossle_height = 5 * cm 
+);
+
+
+
 
