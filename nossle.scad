@@ -7,5 +7,3 @@ module nossle(height=30, innerTubeDiameter=5) {
 	}
     }
 }
-
-nossle();
