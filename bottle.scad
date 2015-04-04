@@ -13,6 +13,24 @@ module skirtElement(h1=1, h2=1, h3=1, w1=1, w2=1, height=1) {
     }
 }
 
+module skirtGuide(
+    nossle_radius,
+    skirtStartHeight,
+    skirtHeight,
+    skirtWidth
+){
+    translate([10,nossle_radius,skirtStartHeight]){
+	rotate([0,-90,0]){
+	    skirtElement(h2=skirtHeight, w1=skirtWidth, height=20);
+	}
+    }
+    translate([10,-nossle_radius,skirtStartHeight+2+skirtHeight]){
+	rotate([0, 90,180]){
+	    skirtElement(h2=skirtHeight, w1=skirtWidth, height=20);
+	}
+    }
+}
+
 module bottle(
         height
         , diameter
@@ -44,16 +62,7 @@ module bottle(
 	    ]
 	);
 	skirtStartHeight = height+nossle_height+filter_height-1;
-	translate([10,nossle_radius,skirtStartHeight]){
-	    rotate([0,-90,0]){
-		skirtElement(h2=skirtHeight, w1=skirtWidth, height=20);
-	    }
-	}
-	translate([10,-nossle_radius,skirtStartHeight+2+skirtHeight]){
-	    rotate([0, 90,180]){
-		skirtElement(h2=skirtHeight, w1=skirtWidth, height=20);
-	    }
-	}
+	skirtGuide(nossle_radius, skirtStartHeight, skirtHeight, skirtWidth);
 
     }
 
