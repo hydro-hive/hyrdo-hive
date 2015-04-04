@@ -1,3 +1,18 @@
+module skirtElement(h1, h2, h3, w1, w2, height) {
+    linear_extrude(height=height) {
+	polygon(points = [
+		[0, 0],
+		[h1, 0],
+		[h1, w1],
+		[h1+h2, w1],
+		[h1+h2, 0],
+		[h1+h2+h3,0],
+		[h1+h2+h3,w1+w2],
+		[0,w1+w2]
+	    ]);
+    }
+}
+
 module bottle(
         height
         , diameter
