@@ -1,6 +1,3 @@
-include <lib.scad>
-include <nossle.scad>
-
 module bottle(height, diameter, width){
     radius = diameter/2;
 
@@ -47,13 +44,4 @@ module bottle(height, diameter, width){
 	    }
 	}
     }
-
-    //translate([0,0,height+radius-width])
-    //nossle(height=10);
 }
-
-bottle(
-    height=60,
-    diameter=60,
-    width=2
-);
