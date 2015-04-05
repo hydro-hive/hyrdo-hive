@@ -4,7 +4,7 @@ include <gopro.scad>;
 
 bottle(
      height          = 20,
-     diameter        = 60,
+     diameter        = 100,
      thickness       = 3,
      filter_diameter = 50,
      filter_height   = 4,
@@ -14,4 +14,4 @@ bottle(
 
 //nossle(height=30, diameter=5);
 
-gopro_mounts(diameter = 60);
+gopro_mounts(diameter = 100);

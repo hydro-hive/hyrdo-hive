@@ -26,4 +26,4 @@ module filter(diameter, height){
     }
 }
 
-filter(50, 4);
+//filter(50, 4);
