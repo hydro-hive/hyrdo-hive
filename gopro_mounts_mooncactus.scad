@@ -1,3 +1,27 @@
+///////////////////////////////////////////////////////////////////////
+//
+// GoPro Hero mount and joint (gopro_mounts_mooncactus.scad) - Rev 1.03
+//
+///////////////////////////////////////////////////////////////////////
+//
+// CC-BY-NC 2013 jeremie.francois@gmail.com
+// http://www.thingiverse.com/thing:62800
+// http://betterprinter.blogspot.com
+// 
+// stripped by palipalo9@googlemail.com
+//
+// -------
+// It slices neatly on an ultimaker with the following parameters
+//
+// 0.1 mm layers (for better look & more compact FDM) -- 0.15 is still OK (and faster)
+// 0.8 mm walls (loops->infill->perimeters)
+// 0.8 mm bottom/top
+// 100% fill (probably safer, though 30% is quite OK)
+//
+// Rev 1.01: fixed printing angle vs captive nut slot, added a slight freeplay
+// Rev 1.02: added handle/bar mount and rounded the angles of the rod mount
+// Rec 1.03: examples and first release (20130317-1234)
+
 
 // The locking nut on the gopro mount triple arm mount (keep it tight)
 gopro_nut_d= 9.2;
@@ -29,24 +53,19 @@ gopro_connector_x= gopro_connector_z;
 gopro_connector_y= gopro_connector_z/2+gopro_wall_th;
 
 
-// the stuff we need
-//gopro_connector("triple", withnut=true);
-//gopro_connector("double");
+module gopro_tripple(withnut=true) {
+    translate([0,-gopro_connector_y,0])
+        gopro_connector("triple", withnut=withnut);
+}
 
-echo(gopro_connector_z);
-echo("hallo");
+module gopro_double(){
+    translate([0,-gopro_connector_y,0])
+        gopro_connector("double");
+}
 
-gopro_torus(r=7, rnd=gopro_connector_roundness);
 
 // ===== GOPRO CONNECTOR ==============
 
-module gopro_torus(r,rnd)
-{
-    translate([0,0,rnd/2])
-        rotate_extrude(convexity= 10)
-        translate([r-rnd/2, 0, 0])
-        circle(r= rnd/2, $fs=0.2);
-}
 
 module gopro_connector(
         version="double", 
@@ -56,18 +75,25 @@ module gopro_connector(
         captive_rod_id=0, 
         captive_nut_angle=0)
 {
-	module gopro_profile(th)
+    module gopro_torus(r,rnd)
     {
-		hull()
+        translate([0,0,rnd/2])
+            rotate_extrude(convexity= 10)
+            translate([r-rnd/2, 0, 0])
+            circle(r= rnd/2, $fs=0.2);
+    }
+    module gopro_profile(th)
+    {
+        hull()
 		{
             gopro_torus(r=gopro_connector_z/2, rnd=gopro_connector_roundness);
-			translate([0,0,th-gopro_connector_roundness])
-				gopro_torus(r=gopro_connector_z/2, rnd=gopro_connector_roundness);
-			translate([-gopro_connector_z/2,gopro_connector_z/2,0])
-				cube([gopro_connector_z,gopro_wall_th,th]);
-		}
-	}
-	difference()
+            translate([0,0,th-gopro_connector_roundness])
+                gopro_torus(r=gopro_connector_z/2, rnd=gopro_connector_roundness);
+            translate([-gopro_connector_z/2,gopro_connector_z/2,0])
+                cube([gopro_connector_z,gopro_wall_th,th]);
+        }
+    }
+    difference()
 	{
         union()
         {
@@ -105,6 +131,4 @@ module gopro_connector(
 			cylinder(r=(version=="double" ? gopro_holed_two : gopro_holed_three)/2, h=gopro_connector_z+4*gopro_tol, center=true, $fs=1);
 	}
 }
-
-
 
