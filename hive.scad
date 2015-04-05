@@ -1,4 +1,5 @@
 include <bottle.scad>;
+include <gopro.scad>;
 //include <nossle.scad>;
 
 bottle(
@@ -12,3 +13,5 @@ bottle(
  );
 
 //nossle(height=30, diameter=5);
+
+gopro_mounts(diameter = 60);
