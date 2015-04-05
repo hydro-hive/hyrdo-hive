@@ -14,6 +14,5 @@ desc 'germination hive'
 task :germination_hive do
   create_output_dir
   puts "Generating stl for germination pod"
-  exec_command = "#{openscad_command} -D 'height=60' -D 'width=2' -D 'diameter=60' -o out/germination-pod.stl main.scad"
-  system exec_command
+  sh "#{openscad_command} -D 'height=60' -D 'width=2' -D 'diameter=60' -o out/germination-pod.stl main.scad"
 end
