@@ -1,34 +1,40 @@
-module skirtElement(h1=1, h2=1, h3=1, w1=1, w2=1, height=1) {
+module skirt_element(h1=1, h2=1, h3=1, w1=1, w2=1, height=1)
+{
     linear_extrude(height=height) {
-	polygon(points = [
-		[0, 0],
-		[h1, 0],
-		[h1, w1],
-		[h1+h2, w1],
-		[h1+h2, 0],
-		[h1+h2+h3,0],
-		[h1+h2+h3,w1+w2],
-		[0,w1+w2]
-	    ]);
+        polygon(points = [
+                [0, 0],
+                [h1, 0],
+                [h1, w1],
+                [h1+h2, w1],
+                [h1+h2, 0],
+                [h1+h2+h3,0],
+                [h1+h2+h3,w1+w2],
+                [0,w1+w2]
+        ]);
     }
 }
 
 module skirtGuide(
     nossle_radius,
-    skirtStartHeight,
-    skirtHeight,
-    skirtWidth
-){
-    translate([10,nossle_radius,skirtStartHeight]){
-	rotate([0,-90,0]){
-	    skirtElement(h2=skirtHeight, w1=skirtWidth, height=20);
-	}
-    }
-    translate([10,-nossle_radius,skirtStartHeight+2+skirtHeight]){
-	rotate([0, 90,180]){
-	    skirtElement(h2=skirtHeight, w1=skirtWidth, height=20);
-	}
-    }
+    skirt_start_height,
+    skirt_height,
+    skirt_width)
+{
+    translate([10,nossle_radius,skirt_start_height])
+        rotate([0,-90,0])
+        skirt_element(
+                h2=skirt_height, 
+                w1=skirt_width, 
+                height=20);
+
+    translate([10,-nossle_radius,skirt_start_height+2+skirt_height])
+        rotate([0, 90,180])
+        skirt_element(
+                h2=skirt_height, 
+                w1=skirt_width, 
+                height=20);
+
+    
 }
 
 module bottle(
@@ -39,8 +45,8 @@ module bottle(
         , nossle_diameter
         , filter_diameter
         , filter_height
-	, skirtHeight=2
-	, skirtWidth=5
+	, skirt_height=2
+	, skirt_width=5
     ){
 	radius = diameter/2;
 	filter_radius = filter_diameter/2;
@@ -61,19 +67,19 @@ module bottle(
 		, [radius + thickness, 0]
 	    ]
 	);
-	skirtStartHeight = height+nossle_height+filter_height-1;
-	skirtGuide(nossle_radius, skirtStartHeight, skirtHeight, skirtWidth);
+	skirt_start_height = height+nossle_height+filter_height-1;
+	skirt_guide(nossle_radius, skirt_start_height, skirt_height, skirt_width);
 
     }
 
 
 
-bottle(
-     height          = 20,
-     diameter        = 60,
-     thickness       = 3,
-     filter_diameter = 50,
-     filter_height   = 4,
-     nossle_diameter     = 5,
-     nossle_height   = 20
- );
+//bottle(
+     //height          = 20,
+     //diameter        = 60,
+     //thickness       = 3,
+     //filter_diameter = 50,
+     //filter_height   = 4,
+     //nossle_diameter     = 5,
+     //nossle_height   = 20
+ //);

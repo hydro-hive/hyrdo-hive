@@ -6,9 +6,10 @@ module gopro_mounts(
     )
 {
     correction_y = diameter/2 + 1;
-    translate([0,-correction_y,8])
+    correction_z = 7.4;
+    translate([0,-correction_y,correction_z])
         gopro_double();
-    translate([0,correction_y,8])
+    translate([0,correction_y,correction_z])
         rotate([0,0,180])
         gopro_tripple();
 }
