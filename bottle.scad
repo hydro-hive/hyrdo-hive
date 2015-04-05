@@ -30,15 +30,15 @@ module skirt_guide(
     skirt_height,
     skirt_width)
 {
-    skirt_depth = 20;
-    translate([10,nossle_radius,skirt_start_height])
+    skirt_depth = skirt_width * 2;
+    translate([skirt_width,nossle_radius,skirt_start_height])
         rotate([0,-90,0])
         skirt_element(
                 h2=skirt_height, 
                 w1=skirt_width, 
                 height=skirt_depth);
 
-    translate([10,-nossle_radius,skirt_start_height+2+skirt_height])
+    translate([skirt_width,-nossle_radius,skirt_start_height+2+skirt_height])
         rotate([0, 90,180])
         skirt_element(
                 h2=skirt_height, 
@@ -56,8 +56,8 @@ module bottle(
         , nossle_diameter
         , filter_diameter
         , filter_height
-	, skirt_height=2
-	, skirt_width=5
+        , skirt_height=2
+        , skirt_width=5
     )
 {
     radius = diameter/2;
