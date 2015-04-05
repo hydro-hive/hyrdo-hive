@@ -23,7 +23,15 @@ task :germination_hive => :output_dir do
   openscad( "main.scad", "germination-pod.stl", "-D 'height=60' -D 'width=2' -D 'diameter=60'" )
 end
 
-task :foo => :output_dir do
-   openscad( "make_filter.scad", "foo_filter.stl", "-D 'diameter=30' -D 'height=4'" )
+desc 'create a more complex version'
+task :complex_version => :output_dir do
+    bottle_height   = 80
+    bottle_diameter = 80
+    filter_diameter = 50
+    filter_height   = 8
+    nossle_diameter = 5
+    nossle_height   = 10
+   openscad( "make_filter.scad", "complex_filter.stl", "-D 'diameter=#{filter_diameter}' -D 'height=#{filter_height}'" )
+   openscad( "make_bottle.scad", "complex_bottle.stl", "-D 'diameter=#{bottle_diameter}' -D 'height=#{bottle_height}' -D 'filter_diameter=#{filter_diameter}' -D 'filter_height=#{filter_height}' -D 'nossle_diameter=#{nossle_diameter}' -D nossle_height=#{nossle_height}" )
 end
 
