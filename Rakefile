@@ -9,6 +9,8 @@ def openscad_command
   'openscad'
 end
 
+
+desc 'germination hive'
 task :germination_hive do
   create_output_dir
   puts "Generating stl for germination pod"
