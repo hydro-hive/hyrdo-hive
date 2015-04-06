@@ -28,20 +28,5 @@ module bottle(height, diameter, width){
 	translate([0,0,height+radius-(width+1)]) {
 	    cylinder(d=4, h=width+2);
 	}
-
-
-	translate([0,0,10]){
-	    translate([radius-width,0,0]) {
-		rotate([0,90,0]) {
-		    cylinder(d=5, h=width+2);
-		}
-	    }
-
-	    translate([-radius-width,0,0]) {
-		rotate([0,90,0]) {
-		    cylinder(d=5, h=width+2);
-		}
-	    }
-	}
     }
 }
