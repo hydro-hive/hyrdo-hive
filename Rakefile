@@ -1,7 +1,14 @@
+require 'fileutils'
 
+output_dir = 'out'
 
 task :output_dir do
-  Dir.mkdir 'out' unless File.exists?('out')
+  Dir.mkdir output_dir unless File.exists?(output_dir)
+end
+
+desc "clean everything"
+task :clean do
+    FileUtils.rm_rf(output_dir)
 end
 
 def openscad_command
@@ -11,7 +18,11 @@ def openscad_command
   'openscad'
 end
 
-def openscad(scad, stl, args) 
+def openscad(scad, stl, argument_list) 
+    args = ""
+    argument_list.each do |key, value|
+        args = "#{args}-D '#{key}=#{value}' "
+    end
     puts ">> Generate #{stl} from #{scad}"
     sh "#{openscad_command} #{args} -o out/#{stl} #{scad}"
 end
@@ -20,7 +31,14 @@ end
 
 desc 'germination hive'
 task :germination_hive => :output_dir do
-  openscad( "main.scad", "germination-pod.stl", "-D 'height=60' -D 'width=2' -D 'diameter=60'" )
+  openscad( 
+           "main.scad", 
+           "germination-pod.stl", 
+           {
+               'height'     => 60,
+               'width'      => 2,
+               'diameter'   => 60,
+           })
 end
 
 desc 'create a more complex version'
@@ -31,7 +49,23 @@ task :complex_version => :output_dir do
     filter_height   = 8
     nossle_diameter = 5
     nossle_height   = 10
-   openscad( "make_filter.scad", "complex_filter.stl", "-D 'diameter=#{filter_diameter}' -D 'height=#{filter_height}'" )
-   openscad( "make_bottle.scad", "complex_bottle.stl", "-D 'diameter=#{bottle_diameter}' -D 'height=#{bottle_height}' -D 'filter_diameter=#{filter_diameter}' -D 'filter_height=#{filter_height}' -D 'nossle_diameter=#{nossle_diameter}' -D nossle_height=#{nossle_height}" )
+   openscad( 
+            "make_filter.scad", 
+            "complex_filter.stl", 
+            { 
+                'diameter'  => filter_diameter, 
+                'height'    => filter_height,
+            })
+   openscad( 
+            "make_bottle.scad", 
+            "complex_bottle.stl", 
+            {
+                'diameter'          => bottle_diameter,
+                'height'            => bottle_height,
+                'filter_diameter'   => filter_diameter,
+                'filter_height'     => filter_height,
+                'nossle_diameter'   => nossle_diameter,
+                'nossle_height'     => nossle_height,
+            })
 end
 
